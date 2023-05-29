@@ -1,4 +1,5 @@
 using BulkWeb.Data;
+using BulkWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BulkWeb.Controllers;
@@ -19,6 +20,19 @@ public class CategoryController : Controller
 
     public IActionResult Create()
     {
+        return View();
+    }
+    
+    [HttpPost]
+    public IActionResult Create(Category obj)
+    {
+        if (ModelState.IsValid)
+        {
+            _db.Categories.Add(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         return View();
     }
 }
